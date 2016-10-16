@@ -1,5 +1,5 @@
 
-mod codes;
+pub mod codes;
 
 macro_rules! parity {
     ( $x:expr ) => {{
