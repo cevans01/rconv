@@ -10,7 +10,7 @@ pub fn gsm_conv_rach() -> Encoder {
             Encoder{ n: 2,
                         k: 5,
                         len: 14,
-                        polys: vec![23, 33],
+                        polys: vec![0o23, 0o33],
                         start_state: 0,
                         termination: super::EncoderType::CONV_TERM_FLUSH
         };
