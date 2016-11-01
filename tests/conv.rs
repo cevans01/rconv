@@ -2,8 +2,6 @@ extern crate rconv;
 
 #[cfg(test)]
 mod tests {
-    use rconv::Encoder;
-    use rconv::EncoderType;
     use rconv::encode;
     use rconv::print_side_by_side;
     use rconv::codes;
@@ -46,9 +44,8 @@ mod tests {
 		input[13]=   0;
 
         //let k: u32 = 5;
-        //let enc = Encoder::new(2, k, input.len() as u32, polys, 0, EncoderType::CONV_TERM_FLUSH);
         let enc = codes::gsm_conv_rach();
-        let mut test_output = encode(enc, &input);
+        let test_output = encode(enc, &input);
 
         let mut truth_output: Vec<u8> = vec![0; 36];
 		truth_output[0]=  1;

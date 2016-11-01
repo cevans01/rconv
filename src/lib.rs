@@ -8,8 +8,8 @@ macro_rules! parity {
 }
 
 pub enum EncoderType {
-    CONV_TERM_FLUSH,
-    CONV_TERM_TAIL_BITING,
+    ConvTermFlush,
+    ConvTermTailBiting,
 }
 
 pub struct Encoder {
@@ -24,16 +24,16 @@ pub struct Encoder {
 
 pub fn encode(code: Encoder, input: &Vec<u8>) -> Vec<u8>
 {
-    let mut output_len: u32 = 0;
+    let output_len: u32;
     match code.termination {
-        EncoderType::CONV_TERM_TAIL_BITING => output_len = (code.len * code.n),
-        EncoderType::CONV_TERM_FLUSH =>       output_len = ((code.len + code.k - 1) * code.n)
+        EncoderType::ConvTermTailBiting => output_len = code.len * code.n,
+        EncoderType::ConvTermFlush =>       output_len = (code.len + code.k - 1) * code.n
     }
     let mut output: Vec<u8> = vec![0; output_len as usize];
     let mut reg:    u32     = 0;
 
     match code.termination {
-        EncoderType::CONV_TERM_TAIL_BITING => {
+        EncoderType::ConvTermTailBiting => {
             for i in 0..(code.k-1) {
                 reg |= (input[(code.len - 1 - i) as usize] as u32) << (code.k - 2 - i);
             }
@@ -51,7 +51,7 @@ pub fn encode(code: Encoder, input: &Vec<u8>) -> Vec<u8>
     // TOOD:
     /*
     match code.termination {
-        EncoderType::CONV_TERM_TAIL_BITING => { }
+        EncoderType::ConvTermTailBiting => { }
         _ => {
         }
     }
