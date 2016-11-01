@@ -43,8 +43,9 @@ pub fn encode(code: Encoder, input: &Vec<u8>) -> Vec<u8>
 
     for i in 0..code.len as usize {
         reg |= (input[i] as u32) << (code.k-1);
-        output[2 * i + 0] = parity!(reg & code.polys[0]) as u8;
-        output[2 * i + 1] = parity!(reg & code.polys[1]) as u8;
+        for j in 0..code.n as usize {
+            output[2 * i + j] = parity!(reg & code.polys[j]) as u8;
+        }
         reg = reg >> 1;
     }
 
@@ -58,8 +59,9 @@ pub fn encode(code: Encoder, input: &Vec<u8>) -> Vec<u8>
     */
 
     for i in code.len..(code.len + code.k - 1) {
-        output[(2 * i + 0) as usize] = parity!(reg & code.polys[0]) as u8;
-        output[(2 * i + 1) as usize] = parity!(reg & code.polys[1]) as u8;
+        for j in 0..code.n as u32 {
+            output[(2 * i + j) as usize] = parity!(reg & code.polys[j as usize]) as u8;
+        }
         reg = reg >> 1;
     }
 
