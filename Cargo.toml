@@ -2,3 +2,6 @@
 name = "rconv"
 version = "0.1.0"
 authors = ["Chris Evans <cevans3326@gmail.com>"]
+
+[dependencies]
+hdf5-rs = "0.2.0"
