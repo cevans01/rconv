@@ -5,6 +5,7 @@ mod tests {
     use rconv::encode;
     use rconv::print_side_by_side;
     use rconv::codes;
+    use rconv::Encoder;
     /*
     #[test]
     fn voyager_code() {
@@ -23,6 +24,13 @@ mod tests {
         assert!( truth_output == test_output );
     }
     */
+
+    fn run_test(enc: Encoder, input: Vec<u8>, output: Vec<u8>) -> bool {
+        let test_output: Vec<u8> = encode(enc, &input);
+        let pass: bool = (output == test_output);
+        pass
+        //assert_eq!( truth_output, test_output );
+    }
 
     #[test]
     fn gsm_rach_code() {
@@ -45,7 +53,7 @@ mod tests {
 
         //let k: u32 = 5;
         let enc = codes::gsm_conv_rach();
-        let test_output = encode(enc, &input);
+        //let test_output = encode(enc, &input);
 
         let mut truth_output: Vec<u8> = vec![0; 36];
 		truth_output[0]=  1;
@@ -85,8 +93,9 @@ mod tests {
 		truth_output[34]=  0;
 		truth_output[35]=  0;
 
+        assert!(run_test(enc, input, truth_output));
 
-        print_side_by_side(&truth_output, &test_output);
+        //print_side_by_side(&truth_output, &test_output);
 
         /*
         let xor_vec: Vec<u8> = (0..truth_output.len()).map(|i| truth_output[i] ^ test_output[i]).collect();
@@ -95,10 +104,10 @@ mod tests {
         }
         */
 
-        println!( "truth.len() = {}", truth_output.len() );
-        println!( "test.len()  = {}", test_output.len() );
+        //println!( "truth.len() = {}", truth_output.len() );
+        //println!( "test.len()  = {}", test_output.len() );
         //assert_eq!( truth_output, test_output );
-        assert_eq!( truth_output, test_output );
+        //assert_eq!( truth_output, test_output );
     }
 
 
